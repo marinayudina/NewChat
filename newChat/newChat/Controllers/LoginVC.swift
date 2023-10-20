@@ -7,13 +7,16 @@
 
 import UIKit
 import FirebaseAuth
+import JGProgressHUD
 
 class LogInVC: UIViewController {
+    
+    private let spinner = JGProgressHUD(style: .dark)
 
     private lazy var emailTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Email"
-//        textField.text = "0518204@mail.ru"
+        textField.text = "0518204@mail.ru"
         textField.font = .systemFont(ofSize: 25)
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 10
@@ -29,7 +32,7 @@ class LogInVC: UIViewController {
     private lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Password"
-//        textField.text = "mari22"
+        textField.text = "mari22"
         textField.font = .systemFont(ofSize: 25)
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 10
@@ -107,8 +110,17 @@ class LogInVC: UIViewController {
         }
        // login
         
+        spinner.show(in: view)
+        
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+            
             guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self.spinner.dismiss(animated: true)
+            }
+            
+            
             if let error = error {
                 print(error.localizedDescription)
                 if let error = error as NSError? {
@@ -130,8 +142,9 @@ class LogInVC: UIViewController {
                     }
                 }
             } else {
-                let chatVC = ChatVC()
-                self.navigationController?.pushViewController(chatVC, animated: true)
+                let chatVC = TabBarVC()
+                chatVC.modalPresentationStyle = .fullScreen
+                self.present(chatVC, animated: true)
             }
         }
     }

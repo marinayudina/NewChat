@@ -8,10 +8,13 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import JGProgressHUD
 
 class RegisterVC: UIViewController {
     
     let db = Firestore.firestore()
+    
+    private let spinner = JGProgressHUD(style: .dark)
     
     private let userImage: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "person.circle"))
@@ -29,7 +32,7 @@ class RegisterVC: UIViewController {
         textField.placeholder = "Email"
         textField.font = .systemFont(ofSize: 25)
         textField.backgroundColor = .white
-        textField.text = "0518204@mail.ru"
+//        textField.text = "0518204@mail.ru"
         textField.layer.cornerRadius = 10
         textField.textAlignment = .center
         textField.clipsToBounds = true
@@ -46,7 +49,7 @@ class RegisterVC: UIViewController {
         textField.layer.cornerRadius = 10
         textField.textAlignment = .center
         textField.clipsToBounds = true
-        textField.text = "marina"
+//        textField.text = "marina"
         textField.translatesAutoresizingMaskIntoConstraints = false
 //        textField.autocapitalizationType = .none
         textField.returnKeyType = .continue
@@ -60,7 +63,7 @@ class RegisterVC: UIViewController {
         textField.layer.cornerRadius = 10
         textField.textAlignment = .center
         textField.clipsToBounds = true
-        textField.text = "yudina"
+//        textField.text = "yudina"
         textField.translatesAutoresizingMaskIntoConstraints = false
 //        textField.autocapitalizationType = .none
         textField.returnKeyType = .continue
@@ -85,7 +88,7 @@ class RegisterVC: UIViewController {
         textField.returnKeyType = .done
         textField.textContentType = .oneTimeCode
         textField.autocorrectionType = .no
-        textField.text = "mari22"
+//        textField.text = "mari22"
         return textField
     }()
     
@@ -130,7 +133,7 @@ class RegisterVC: UIViewController {
         setGesture()
         
 //        mainStack.backgroundColor = .systemPink
-        navigationItem.backButtonTitle = ""
+//        navigationItem.backButtonTitle = ""
     }
     
     private func setGesture() {
@@ -178,6 +181,11 @@ class RegisterVC: UIViewController {
         }
         
         //Firebase Registration
+        
+        DispatchQueue.main.async {
+            self.spinner.dismiss(animated: true)
+        }
+        
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
             guard let self = self else { return }
             
@@ -203,10 +211,10 @@ class RegisterVC: UIViewController {
                                                                      FStore.firstNameField: firstName,
                                                                      FStore.lastNameField: lastName,
                                                                      ])
-                let chatVC = ChatVC()
-                print("auth")
-               
-                self.navigationController?.pushViewController(chatVC, animated: true)
+                //тут tabbar
+                let chatVC = TabBarVC()
+                chatVC.modalPresentationStyle = .fullScreen
+                self.present(chatVC, animated: true)
             }
         }
     }

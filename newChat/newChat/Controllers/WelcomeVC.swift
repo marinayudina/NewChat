@@ -53,7 +53,7 @@ class WelcomeVC: UIViewController {
         setupView()
         setConstraints()
         
-        navigationItem.backButtonTitle = ""
+//        navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .black
         
     }

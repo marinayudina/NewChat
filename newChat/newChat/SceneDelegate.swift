@@ -20,10 +20,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
 
           var viewController: UIViewController;
+        
           if (FirebaseAuth.Auth.auth().currentUser == nil) {
               viewController = WelcomeVC()
           } else {
-              viewController = ChatVC()
+              viewController = TabBarVC()
           }
   
         let navController = UINavigationController(rootViewController: viewController)
