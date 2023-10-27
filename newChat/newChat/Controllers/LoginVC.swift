@@ -121,8 +121,7 @@ class LogInVC: UIViewController {
             }
             
             
-            if let error = error {
-                print(error.localizedDescription)
+
                 if let error = error as NSError? {
                     if let authError = AuthErrorCode.Code(rawValue: error.code) {
                         switch authError {
@@ -140,8 +139,10 @@ class LogInVC: UIViewController {
                             self.showAlert("An unknowm error")
                         }
                     }
-                }
             } else {
+                
+                UserDefaults.standard.set(email, forKey: "email")
+                
                 let chatVC = TabBarVC()
                 chatVC.modalPresentationStyle = .fullScreen
                 self.present(chatVC, animated: true)
@@ -149,43 +150,7 @@ class LogInVC: UIViewController {
         }
     }
   
-    
-    
-//    @objc private func logButtonTapped(_ sender: UIButton) {
-//
-//        if let email = emailTextField.text,
-//           let password = passwordTextField.text {
-//            Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-//                guard let self = self else { return }
-//                if let error = error {
-//                    print(error.localizedDescription)
-//                    if let error = error as NSError? {
-//                        if let authError = AuthErrorCode.Code(rawValue: error.code) {
-//                            switch authError {
-//                            case .invalidEmail:
-//                                self.showAlert("Email is invalid.")
-//                            case .operationNotAllowed:
-//                                self.showAlert("not allowed")
-//                            case .userDisabled:
-//                                self.showAlert("User's account is disabled.")
-//                            case .userNotFound:
-//                                self.showAlert("User's account was not found.")
-//                            case .wrongPassword:
-//                                self.showAlert("Wrong password. Try again")
-//                            default:
-//                                self.showAlert("An unknowm error")
-//                            }
-//                        }
-//                    }
-//                } else {
-//                    let chatVC = ChatVC()
-//                    navigationController?.pushViewController(chatVC, animated: true)
-//                }
-//            }
-//        }
-//
-//    }
-}
+    }
 
 extension LogInVC {
     private func setConstraints() {

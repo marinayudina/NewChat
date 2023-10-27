@@ -12,7 +12,6 @@ import JGProgressHUD
 
 class RegisterVC: UIViewController {
     
-    let db = Firestore.firestore()
     
     private let spinner = JGProgressHUD(style: .dark)
     
@@ -179,15 +178,17 @@ class RegisterVC: UIViewController {
             showAlert("Fill all fields")
             return
         }
-        
+        spinner.show(in: view)
         //Firebase Registration
         
-        DispatchQueue.main.async {
-            self.spinner.dismiss(animated: true)
-        }
+
         
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
             guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self.spinner.dismiss(animated: true)
+            }
             
             if let error = error as NSError?{
 //                 authResult == nil {
@@ -206,11 +207,30 @@ class RegisterVC: UIViewController {
                 }
             }
             else {
-                self.db.collection(FStore.documentUsers).addDocument(data:
-                                                                    [FStore.emailField : email,
-                                                                     FStore.firstNameField: firstName,
-                                                                     FStore.lastNameField: lastName,
-                                                                     ])
+                let currentuser =  User(firstName: firstName,
+                                 lastName: lastName,
+                                 emailAddress: email)
+                DatabaseManager.shared.addUser(with: currentuser) { success in
+                    if success {
+                        ///upload image
+                        guard let image = self.userImage.image,
+                              let data = image.pngData() else {
+                            return
+                        }
+                        let fileName = currentuser.profilePictureURL
+                        StorageManager.shared.uploadProfilePicture(with: data,
+                                                                   fileName: fileName) { result in
+                            switch result {
+                            case .success(let downloadURL):
+                                UserDefaults.standard.set(downloadURL, forKey: "profile_picture_url")
+                                print(downloadURL)
+                            case .failure(let error):
+                                print("Storage manager error - \(error)")
+                            }
+                        }
+                    }
+                }
+                
                 //тут tabbar
                 let chatVC = TabBarVC()
                 chatVC.modalPresentationStyle = .fullScreen
@@ -222,42 +242,6 @@ class RegisterVC: UIViewController {
     @objc private func changePhotoTap() {
         presentPhotoActionSheet()
     }
-
-//    @objc private func registerButtonTapped(_ sender: UIButton) {
-//        view.endEditing(true)
-//        if let email = emailTextField.text,
-//           let password = passwordTextField.text {
-//            if email.isEmpty == true {
-//                showAlert("Fill email field")
-//                return
-//            }
-//            Auth.auth().createUser(withEmail: email, password: password) { [ weak self] authResult, error in
-//                guard let self = self else { return }
-//                if let error = error {
-//                    if let error = error as NSError? {
-//                        if let authError = AuthErrorCode.Code(rawValue: error.code) {
-//                            switch authError {
-//                            case .invalidEmail:
-//                                self.showAlert("Email is invalid.")
-//                            case .emailAlreadyInUse:
-//                                self.showAlert("Email used to attempt sign up already exists")
-//                            case .weakPassword:
-//                                self.showAlert(error.userInfo[NSLocalizedFailureReasonErrorKey] as! String)
-//                            default:
-//                                self.showAlert("An unknowm error")
-//                            }
-//                        }
-//                    }
-//
-//                } else {
-//                    let chatVC = ChatVC()
-//                    navigationController?.pushViewController(chatVC, animated: true)
-//                }
-//            }
-//        }
-//
-//
-//    }
 }
 
 extension RegisterVC {

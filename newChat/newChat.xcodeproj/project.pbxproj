@@ -39,6 +39,8 @@
 		176739862ADEF7F100F96C31 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176739852ADEF7F100F96C31 /* ProfileVC.swift */; };
 		1795D2A12AE16E1A00A7752C /* MessageKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1795D2A02AE16E1A00A7752C /* MessageKit.swift */; };
 		1795D2A32AE174F600A7752C /* NewConversationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1795D2A22AE174F600A7752C /* NewConversationVC.swift */; };
+		1795D2A62AE2596A00A7752C /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1795D2A52AE2596A00A7752C /* StorageManager.swift */; };
+		1795D2A92AE2687D00A7752C /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1795D2A82AE2687D00A7752C /* FirebaseStorage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +86,7 @@
 		176739852ADEF7F100F96C31 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		1795D2A02AE16E1A00A7752C /* MessageKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKit.swift; sourceTree = "<group>"; };
 		1795D2A22AE174F600A7752C /* NewConversationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationVC.swift; sourceTree = "<group>"; };
+		1795D2A52AE2596A00A7752C /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +97,7 @@
 				1767397B2ADED3E800F96C31 /* RealmSwift in Frameworks */,
 				176739792ADED3E700F96C31 /* Realm in Frameworks */,
 				1767396B2ADDA79F00F96C31 /* FirebaseDatabase in Frameworks */,
+				1795D2A92AE2687D00A7752C /* FirebaseStorage in Frameworks */,
 				1767396D2ADDA79F00F96C31 /* FirebaseFirestore in Frameworks */,
 				176739672ADDA79F00F96C31 /* FirebaseAnalytics in Frameworks */,
 				176739692ADDA79F00F96C31 /* FirebaseAuth in Frameworks */,
@@ -127,6 +131,7 @@
 				1767393A2AD9866100F96C31 /* newChatTests */,
 				176739442AD9866100F96C31 /* newChatUITests */,
 				176739222AD9865A00F96C31 /* Products */,
+				1795D2A72AE2687D00A7752C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -211,6 +216,7 @@
 			children = (
 				1767396F2ADEB32700F96C31 /* DatabaseManager.swift */,
 				1795D2A02AE16E1A00A7752C /* MessageKit.swift */,
+				1795D2A52AE2596A00A7752C /* StorageManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -221,6 +227,13 @@
 				1795D2A22AE174F600A7752C /* NewConversationVC.swift */,
 			);
 			path = NewConversation;
+			sourceTree = "<group>";
+		};
+		1795D2A72AE2687D00A7752C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -249,6 +262,7 @@
 				176739782ADED3E700F96C31 /* Realm */,
 				1767397A2ADED3E800F96C31 /* RealmSwift */,
 				1767397D2ADED4C100F96C31 /* SDWebImage */,
+				1795D2A82AE2687D00A7752C /* FirebaseStorage */,
 			);
 			productName = newChat;
 			productReference = 176739212AD9865A00F96C31 /* newChat.app */;
@@ -389,6 +403,7 @@
 				1795D2A32AE174F600A7752C /* NewConversationVC.swift in Sources */,
 				176739822ADEF40600F96C31 /* ConverationVC.swift in Sources */,
 				176739702ADEB32800F96C31 /* DatabaseManager.swift in Sources */,
+				1795D2A62AE2596A00A7752C /* StorageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -807,6 +822,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1767397C2ADED4C100F96C31 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
+		};
+		1795D2A82AE2687D00A7752C /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 176739652ADDA79F00F96C31 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

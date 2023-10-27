@@ -32,7 +32,7 @@ class TabBarVC: UITabBarController {
         let nav1 = UINavigationController(rootViewController: vc1)
         let nav2 = UINavigationController(rootViewController: vc2)
         
-        setViewControllers([nav1, nav2], animated: true)
+        setViewControllers([nav1, nav2], animated: false)
         
 //        navigationController?.isNavigationBarHidden = true
     }
